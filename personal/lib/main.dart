@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:personal/app_localizations.dart';
 
-void main() => runApp(MyApp());
+//import 'package:flutter_localizations/flutter_localizations.dart'
+void main() => runApp(PersonalApp());
 
-class MyApp extends StatelessWidget {
+class PersonalApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -11,6 +14,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('ko', 'KR'),
+        Locale('ja', 'JP'),
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
+        print('-------${supportedLocales.first}');
+        return supportedLocales.first;
+      },
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -44,9 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
+            Text(AppLocalizations.of(context).translate('logindFail')),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
