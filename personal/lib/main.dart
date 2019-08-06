@@ -15,9 +15,12 @@ class PersonalApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       supportedLocales: [
-        Locale('en', 'US'),
-        Locale('ko', 'KR'),
-        Locale('ja', 'JP'),
+//        Locale('en', 'US'),
+//        Locale('ko', 'KR'),
+//        Locale('ja', 'JP'),
+        Locale('en'),
+        Locale('ko'),
+        Locale('ja'),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -25,9 +28,14 @@ class PersonalApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       localeResolutionCallback: (locale, supportedLocales) {
+        print('---${locale}----${supportedLocales}');
+        if (locale == null) {
+          return supportedLocales.first;
+        }
         for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
+//          if (supportedLocale.languageCode == locale.languageCode &&
+//              supportedLocale.countryCode == locale.countryCode) {
+          if (supportedLocale.languageCode == locale.languageCode) {
             return supportedLocale;
           }
         }
@@ -68,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(AppLocalizations.of(context).translate('logindFail')),
+            Text('asd'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
